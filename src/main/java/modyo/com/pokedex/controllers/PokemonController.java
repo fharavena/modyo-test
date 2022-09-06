@@ -3,6 +3,7 @@ package modyo.com.pokedex.controllers;
 import modyo.com.pokedex.models.PokemonDetailOutDTO;
 import modyo.com.pokedex.models.PokemonOutDTO;
 
+import modyo.com.pokedex.service.PokeService;
 import modyo.com.pokedex.service.PokeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ import java.util.Map;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PokemonController {
     @Autowired
-    private PokeServiceImpl pokeServiceImpl;
+    private PokeService pokeServiceImpl;
 
     @GetMapping("/all")
     public ResponseEntity<?> getPokemonList(
@@ -34,13 +35,13 @@ public class PokemonController {
         PokemonOutDTO data;
         Map<String, Object> response = new HashMap<>();
 
-//        try {
+        try {
             data = pokeServiceImpl.findAllPokemon(offset, limit,baseUrl+"/api/v1/pokemon/");
-//        } catch (Exception e) {
-//            response.put("message", "Error 500");
-//            response.put("status", "error");
-//            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
+        } catch (Exception e) {
+            response.put("message", "Error 500");
+            response.put("status", "error");
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
         if (data == null) {
             response.put("message", "Not found: ");
@@ -58,13 +59,13 @@ public class PokemonController {
         PokemonDetailOutDTO data;
         Map<String, Object> response = new HashMap<>();
 
-//        try {
+        try {
             data = pokeServiceImpl.findPokemon(name);
-//        } catch (Exception e) {
-//            response.put("message", "Error 500");
-//            response.put("status", "error");
-//            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
+        } catch (Exception e) {
+            response.put("message", "Error 500");
+            response.put("status", "error");
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
         if (data == null) {
             response.put("message", "Not found: " + name);
