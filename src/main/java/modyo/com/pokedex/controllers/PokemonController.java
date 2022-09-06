@@ -16,6 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/pokemon")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PokemonController {
     @Autowired
     private PokeServiceImpl pokeServiceImpl;
